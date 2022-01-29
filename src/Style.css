@@ -1,0 +1,15 @@
+.container {
+    border: 2px solid #7CA3FD;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: left;
+    padding: 5px 15px;
+}
+
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    margin: 0px auto 15px auto;
+}

@@ -1,11 +1,18 @@
 import React from "react";
 import { Route, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+
 import './Style.css';
+
 
 const Main = (props) => {
   const history = useHistory();
+  const my_words = useSelector((state) => state.dictionary.word);
+  const my_description = useSelector((state) => state.dictionary.description);
+  const my_example = useSelector((state) => state.dictionary.example);
 
+console.log(my_words)
   return (
     <div>
       {/* <Container> */}

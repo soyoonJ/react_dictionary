@@ -1,14 +1,25 @@
 import React from "react";
-import {Route, useHistory } from "react-router-dom"
-import styled from "styled-components";
+// import {useHistory } from "react-router-dom"
+import {useDispatch} from "react-redux";
+import { createCard } from "./redux/modules/dictionary";
+
+// import styled from "styled-components";
 import './Style.css';
 
 const New = (props) => {
-  const history = useHistory();
-  console.log(props);
+//   const history = useHistory();
+  const dispatch = useDispatch();
+
   const word = React.useRef(null);
   const description = React.useRef(null);
   const example = React.useRef(null);
+
+  const addNewWord = () => {
+
+    dispatch(createCard({word:word.current.value, description:description.current.value, example:example.current.value}));
+
+    // dispatch(addBucketFB({text:text.current.value, completed: false})) 
+  };
 
   return (
     <div>
@@ -32,7 +43,7 @@ const New = (props) => {
             <input id="example" ref={example}></input>
         </div>
 
-        <button>추가하기</button>
+        <button onClick={addNewWord}>추가하기</button>
 
       {/* 백 버튼 클릭 시 메인 페이지로 이동 */}
       {/* <div

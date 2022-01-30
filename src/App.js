@@ -1,11 +1,11 @@
 // commit test
 import React from "react";
 import styled from "styled-components";
-import {Route, Switch} from "react-router-dom"
+import {Route} from "react-router-dom"
 
 import './App.css';
 import New from './New';
-import Main from './Main';
+import Home from './Home';
 
 
 function App() {
@@ -16,12 +16,12 @@ function App() {
       <Line />
 
       <Route path="/" exact>
-        <Main />
+        <Home />
       </Route>
       <Route path="/new">
         <New />
       </Route>
-      
+
     </div>
   );
 }

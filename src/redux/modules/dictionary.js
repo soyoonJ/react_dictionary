@@ -17,7 +17,9 @@ const CREATE = "dictionary/CREATE";
 
 // 초기 상태값을 만들어줍니다.
 const initialState = {
-    list:[{word:"단어입니다", description:"설명입니다설명입니다줄글줄글", example:"예시입니다예시입니다"}]
+    // list:[{word:"단어입니다", description:"설명입니다설명입니다줄글줄글", example:"예시입니다예시입니다"}]
+    list:[]
+
 };
 
 // Action Creators

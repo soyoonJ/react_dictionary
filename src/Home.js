@@ -1,14 +1,14 @@
 /* eslint-disable array-callback-return */
 import React from "react";
+import styled from "styled-components";
+
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import {db} from "./firebase"
-import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
+// import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { loadCardsFB } from "./redux/modules/dictionary";
 // import thunk from "redux-thunk";
 
-import styled from "styled-components";
 
 const Home = (props) => {
     const history = useHistory();
@@ -25,16 +25,21 @@ const Home = (props) => {
 
     return (
         <div>
+            <article className="cardbox">
             {my_words.map((el,i) => {
                 return (
-                  <div className="container" key={i}>
+                  <Container key={i}>
                     <h3>{el.word}</h3>
+                    <hr style={{
+                        border:"1px solid #eee"
+                    }}/>
                     <p>{el.description}</p>
                     <p style={{ color: "blue" }}>{el.example}</p>
-                  </div>
+                  </Container>
                 );
                 
             })}
+            </article>
         
         <PlusCircle
             onClick={()=> {
@@ -43,15 +48,10 @@ const Home = (props) => {
 
                 <span className="horiz"></span>
                 <span className="vert"></span>
-
-
         </PlusCircle>
-
-
 
         </div>
     );
-
 
 }
 
@@ -90,6 +90,33 @@ const PlusCircle = styled.div`
 }
 
 `;
+
+const Container = styled.div`
+border-radius: 10px;
+width: 300px;
+height: 430px;
+overflow: auto;
+text-align: left;
+padding: 5px 20px 10px 20px;
+margin: 20px;
+background: white;
+box-shadow: 4px 4px 10px 2px #B5BD1C;
+
+& > :hover {
+    
+}
+
+& > h3 {
+    font-size: 30px;
+    color: #44470B;
+}
+
+& > p {
+    font-family: 'Pretendard-Regular';
+}
+
+
+`
 
 
 

@@ -16,8 +16,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1>항해99 사전</h1>
-      <Line />
+      <h1 className="title">👩‍💻 기억삭제방지 단어장 🧠</h1>
+      {/* <Line /> */}
 
       <Route path="/" exact>
         <Home />
@@ -31,10 +31,10 @@ function App() {
 }
 
 
-const Line = styled.hr`
-  margin: 16px 0px;
-  border: 1px dotted #ddd;
-`;
+// const Line = styled.hr`
+//   margin: 16px 0px;
+//   border: 1px dotted white;
+// `;
 
 
 export default App;

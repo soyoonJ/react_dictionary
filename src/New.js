@@ -7,6 +7,10 @@ import { createCard } from "./redux/modules/dictionary";
 import './Style.css';
 
 const New = (props) => {
+
+  // const [list, setList] = React.useState([
+  //   {word:"단어입니다", description:"설명입니다설명입니다줄글줄글", example:"예시입니다예시입니다"},
+  // ]);
 //   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -26,21 +30,21 @@ const New = (props) => {
         <h4>단어 추가하기</h4>
 
         <div className="input-box">
-            <label htmlFor="word"
+            <label htmlFor="words"
             style={{textAlign:"left"}}>단어</label>
-            <input id="word" ref={word}></input>
+            <input id="words" ref={word}></input>
         </div>
 
         <div className="input-box">
-            <label htmlFor="description"
+            <label htmlFor="descriptions"
             style={{textAlign:"left"}}>설명</label>
-            <input id="description" ref={description}></input>
+            <input id="descriptions" ref={description}></input>
         </div>
 
         <div className="input-box">
-            <label htmlFor="example"
+            <label htmlFor="examples"
             style={{textAlign:"left"}}>예시</label>
-            <input id="example" ref={example}></input>
+            <input id="examples" ref={example}></input>
         </div>
 
         <button onClick={addNewWord}>추가하기</button>

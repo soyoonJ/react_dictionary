@@ -22,14 +22,15 @@ export function createCard(card) {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     // do reducer stuff
-    case "dictionary/LOAD":
-        return {list:action.my_words};
+    case "dictionary/LOAD": {
+      return {list:action.my_words};
+    }
+
     
-    case "dictionary/CREATE":
-        const new_word_list = [...state.list, action.dictionary];
-        return { list: new_word_list };
-  
-        
+    case "dictionary/CREATE": {
+      const new_word_list = [...state.list, action.card];
+      return { list: new_word_list };
+    }
 
     default:
       return state;

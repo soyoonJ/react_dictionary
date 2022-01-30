@@ -2,6 +2,9 @@
 import React from "react";
 import styled from "styled-components";
 import {Route} from "react-router-dom"
+import {db} from "./firebase"
+import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
+
 
 import './App.css';
 import New from './New';
@@ -9,6 +12,7 @@ import Home from './Home';
 
 
 function App() {
+
 
   return (
     <div className="App">

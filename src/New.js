@@ -1,7 +1,7 @@
 import React from "react";
 // import {useHistory } from "react-router-dom"
 import {useDispatch} from "react-redux";
-import { createCard } from "./redux/modules/dictionary";
+import { createCard, createCardFB } from "./redux/modules/dictionary";
 
 // import styled from "styled-components";
 import './Style.css';
@@ -20,9 +20,9 @@ const New = (props) => {
 
   const addNewWord = () => {
 
-    dispatch(createCard({word:word.current.value, description:description.current.value, example:example.current.value}));
+    // dispatch(createCard({word:word.current.value, description:description.current.value, example:example.current.value}));
 
-    // dispatch(addBucketFB({text:text.current.value, completed: false})) 
+    dispatch(createCardFB({word:word.current.value, description:description.current.value, example:example.current.value})) 
   };
 
   return (

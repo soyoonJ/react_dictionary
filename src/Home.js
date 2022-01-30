@@ -2,15 +2,26 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import {db} from "./firebase"
+import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { loadCardsFB } from "./redux/modules/dictionary";
 // import thunk from "redux-thunk";
 
 import styled from "styled-components";
 
 const Home = (props) => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const my_words = useSelector((state)=> state.dictionary.list);
 
     console.log(my_words)
+
+    React.useEffect( () => {
+        dispatch(loadCardsFB());
+    }, []);
+
+
 
     return (
         <div>

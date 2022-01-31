@@ -29,8 +29,8 @@ const New = (props) => {
     // dispatch(createCard({word:word.current.value, description:description.current.value, example:example.current.value}));
     console.log(description.current.value);
     dispatch(createCardFB({word:word.current.value, description:description.current.value, example:example.current.value})) 
-    history.goBack();
-    window.location.replace("/")
+    history.push('/');
+    // window.location.replace("/")
   
   };
 

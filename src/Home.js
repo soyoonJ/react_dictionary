@@ -16,11 +16,6 @@ const Home = (props) => {
     const dispatch = useDispatch();
     const my_words = useSelector((state)=> state.dictionary.list);
 
-    React.useEffect( () => {
-        dispatch(loadCardsFB());
-    }, []);
-
-
 
     return (
         <div>

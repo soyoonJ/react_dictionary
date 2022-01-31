@@ -1,9 +1,11 @@
 // commit test
 import React from "react";
 import styled from "styled-components";
-import {Route} from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
 import {db} from "./firebase"
 import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { loadCardsFB } from "./redux/modules/dictionary";
 
 
 import './App.css';
@@ -15,7 +17,10 @@ import NotFound from './NotFound';
 
 
 function App() {
-
+  const dispatch = useDispatch();
+  React.useEffect( () => {
+    dispatch(loadCardsFB());
+}, []);
 
   return (
     <div className="App">
@@ -35,6 +40,7 @@ function App() {
       <Route path="/update/:word_id">
         <Update />
       </Route>
+      <Route component={NotFound} />
       </Switch>
 
     </div>

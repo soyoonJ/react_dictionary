@@ -3,7 +3,7 @@ import styled from "styled-components";
 // import {useHistory } from "react-router-dom"
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createCard, createCardFB, updateCard } from "./redux/modules/dictionary";
+import { createCard, createCardFB, updateCard, updateCardFB } from "./redux/modules/dictionary";
 
 import Button from '@mui/material/Button';
 
@@ -24,10 +24,11 @@ const Update = (props) => {
   const toUpdate = useSelector((state)=> state.dictionary.list.filter(e=>e.id == word_id.word_id));
 
   const updateWord = () => {
-        console.log('업데이트')
-
+    dispatch(updateCardFB(word_id.word_id, {word:word.current.value, description:description.current.value, example:example.current.value}));
+    window.location.replace('/');
   };
 
+  
   return (
     <div>
       <InputContainer>
@@ -63,14 +64,17 @@ const Update = (props) => {
             rows="5" ref={example} placeholder="수정할 예시문장을 입력해주세요" required></textarea>
           </div>
         </form>
+        
+            
 
         <Button variant="contained" color="success"
-        onClick={()=>{
-            dispatch(updateCard(word.current.value, description.current.value, example.current.value));
+        onClick={updateWord}
+            // dispatch(updateCard(word.current.value, description.current.value, example.current.value));
+            // dispatch(updateCardFB(word_id.word_id, word.current.value, description.current.value, example.current.value));
 
-            history.goBack();
+            // history.goBack();
             // dispatch(updateCard())
-        }}>수정하기</Button>
+        >수정하기</Button>
       </InputContainer>
 
       {/* 백 버튼 클릭 시 메인 페이지로 이동 */}

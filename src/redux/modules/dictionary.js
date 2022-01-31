@@ -37,8 +37,8 @@ export function deleteCard(card_index){
   return {type: DELETE, card_index};
 }
 
-export function updateCard(word, description, example){
-  return {type: UPDATE, word, description, example};
+export function updateCard(id, words, descriptions, examples){
+  return {type: UPDATE, id, words, descriptions, examples};
 }
 
 // 미들웨어
@@ -90,6 +90,21 @@ export const deleteCardFB = (card_id) => {
 
 }
 
+export const updateCardFB = (id, newData) => {
+  return async function () {
+    const docRef = doc(db, "dictionary", id);
+    const updateData = {id, ...newData}
+
+    await updateDoc(docRef, {...updateData})
+    window.location.replace('/');
+    // console.log(getState().dictionary);
+    // const _dictionary_list = getState().dictionary.list;
+    // const dictionary_index = _dictionary_list.findIndex((b) => {
+    //   return b.id === id;
+    };
+
+    // dispatch(updateCard(dictionary_index));
+  };
 
 
 
@@ -125,7 +140,7 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case "dictionary/UPDATE": {
-      const new_word_list = [...state.list, action.word, action.description, action.example];
+      const new_word_list = [...state.list, action.id, action.words, action.descriptions, action.examples];
       return { list: new_word_list };
     }
 

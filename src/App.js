@@ -7,8 +7,11 @@ import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/fi
 
 
 import './App.css';
-import New from './New';
 import Home from './Home';
+import New from './New';
+import Update from './Update';
+
+
 
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
       </Route>
       <Route path="/new">
         <New />
+      </Route>
+      <Route path="/update/:word_id">
+        <Update />
       </Route>
 
     </div>

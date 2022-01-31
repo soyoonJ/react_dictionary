@@ -14,6 +14,7 @@ import {db} from "../../firebase";
 // Actions
 const LOAD = "dictionary/LOAD";
 const CREATE = "dictionary/CREATE";
+const DELETE = "dictionary/DELETE";
 
 // 초기 상태값을 만들어줍니다.
 const initialState = {
@@ -29,6 +30,10 @@ export function loadCards(card) {
 
 export function createCard(card) {
   return { type: CREATE, card };
+}
+
+export function deleteCard(card_index){
+  return {type: DELETE, card_index};
 }
 
 // 미들웨어
@@ -59,6 +64,28 @@ export const createCardFB = (card) => {
   }
 }
 
+export const deleteCardFB = (card_id) => {
+  return async function (dispatch, getState) {
+    if(!card_id){
+      window.alert("아이디가 없네요!");
+      return;
+    }
+    const docRef = doc(db, "dictionary", card_id);
+    await deleteDoc(docRef);
+
+    const _card_list = getState().dictionary.list;
+		// findIndex로 몇 번째에 있는 지 찾기!
+    const card_index = _card_list.findIndex((b) => {
+			// updateBucketFB의 파라미터로 넘겨받은 아이디와 
+			// 아이디가 독같은 요소는 몇 번째에 있는 지 찾아봐요!
+      return b.id === card_id;
+    });
+    dispatch(deleteCard(card_index));
+  }
+
+}
+
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -76,6 +103,17 @@ export default function reducer(state = initialState, action = {}) {
       const new_word_list = [...state.list, action.card];
       return { list: new_word_list };
     }
+
+    case "dictionary/DELETE": {
+      console.log(state, action);
+      const new_word_list = state.list.filter((e,i) => {
+        return parseInt(action.card_index) !== i;
+      });
+
+      return {list: new_word_list};
+
+    }
+
 
     default:
       return state;

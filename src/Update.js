@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 // import {useHistory } from "react-router-dom"
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { createCard, createCardFB } from "./redux/modules/dictionary";
 
 import Button from '@mui/material/Button';
@@ -11,26 +11,22 @@ import Button from '@mui/material/Button';
 import './Style.css';
 
 
-const New = (props) => {
+const Update = (props) => {
 
-  // const [list, setList] = React.useState([
-  //   {word:"단어입니다", description:"설명입니다설명입니다줄글줄글", example:"예시입니다예시입니다"},
-  // ]);
-//   const history = useHistory();
   const history = useHistory();
+  const word_id = useParams();
   const dispatch = useDispatch();
 
   const word = React.useRef(null);
   const description = React.useRef(null);
   const example = React.useRef(null);
 
-  const addNewWord = () => {
+  const toUpdate = useSelector((state)=> state.dictionary.list.filter(e=>e.id == word_id.word_id));
+  console.log(toUpdate[0]);
 
-    // dispatch(createCard({word:word.current.value, description:description.current.value, example:example.current.value}));
+  const updateWord = () => {
+        console.log('업데이트')
 
-    dispatch(createCardFB({word:word.current.value, description:description.current.value, example:example.current.value})) 
-    history.goBack();
-  
   };
 
   return (
@@ -42,33 +38,34 @@ const New = (props) => {
             <label htmlFor="words" style={{ textAlign: "left" }}>
               단어
             </label>
-            <textarea id="words" className="textarea" ref={word} placeholder="추가할 단어를 입력해주세요" required></textarea>
+            <textarea id="words" className="textarea" value={toUpdate[0].word} ref={word} placeholder="수정할 단어를 입력해주세요" required>
+            </textarea>
           </div>
 
           <div className="input-box">
             <label htmlFor="descriptions" style={{ textAlign: "left" }}>
               뜻
             </label>
-            <textarea id="descriptions" className="textarea" rows="5"
+            <textarea id="descriptions" className="textarea" value={toUpdate[0].description}
             style={{
-              height:"70px"
-            }}
-              ref={description} placeholder="단어의 뜻을 입력해주세요" required></textarea>
+                height:"70px"
+              }}
+            rows="5" ref={description} placeholder="수정할 뜻을 입력해주세요" required></textarea>
           </div>
 
           <div className="input-box">
             <label htmlFor="examples" style={{ textAlign: "left" }}>
               예문
             </label>
-            <textarea id="examples" className="textarea" rows="5"
+            <textarea id="examples" className="textarea" value={toUpdate[0].example}
             style={{
-              height:"70px"
-            }}
-            ref={example} placeholder="예시문장을 입력해주세요" required></textarea>
+                height:"70px"
+              }}
+            rows="5" ref={example} placeholder="수정할 예시문장을 입력해주세요" required></textarea>
           </div>
         </form>
 
-        <Button variant="contained" color="success" onClick={addNewWord}>추가하기</Button>
+        <Button variant="contained" color="success" onClick={updateWord}>수정하기</Button>
       </InputContainer>
 
       {/* 백 버튼 클릭 시 메인 페이지로 이동 */}
@@ -103,6 +100,7 @@ const InputContainer = styled.main`
     color: '#ddd'
   }
 
+
   button {
     width: 110px;
     height: 50px;
@@ -114,4 +112,4 @@ const InputContainer = styled.main`
 
 `
 
-export default New;
+export default Update;

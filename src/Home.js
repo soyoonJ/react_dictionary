@@ -3,19 +3,18 @@ import React from "react";
 import styled from "styled-components";
 
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
 // import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
-import { useDispatch } from "react-redux";
-import { loadCardsFB } from "./redux/modules/dictionary";
+import { useSelector, useDispatch } from "react-redux";
+import { loadCardsFB, deleteCard, deleteCardFB } from "./redux/modules/dictionary";
 // import thunk from "redux-thunk";
+import { FaPencilAlt } from "react-icons/fa";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 
 const Home = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const my_words = useSelector((state)=> state.dictionary.list);
-
-    console.log(my_words)
 
     React.useEffect( () => {
         dispatch(loadCardsFB());
@@ -29,10 +28,19 @@ const Home = (props) => {
             {my_words.map((el,i) => {
                 return (
                   <Container key={i}>
-                    <h3>{el.word}</h3>
+                    <h3>{el.word}
+                        <span>
+                            <FaPencilAlt style={{margin:"0px 10px"}} onClick={()=>{
+                                history.push('/update/' + my_words[i].id);
+                            }}/>
+                            <FaRegTrashAlt onClick={()=>{
+                                dispatch(deleteCardFB(my_words[i].id));
+                            }}/></span>
+                    </h3>
                     <hr style={{
                         border:"1px solid #eee"
-                    }}/>
+                    }}/>    
+                    
                     <p>{el.description}</p>
                     <p style={{ color: "blue" }}>{el.example}</p>
                   </Container>
@@ -45,7 +53,6 @@ const Home = (props) => {
             onClick={()=> {
                 history.push("/new");
             }}>
-
                 <span className="horiz"></span>
                 <span className="vert"></span>
         </PlusCircle>
@@ -66,7 +73,8 @@ const PlusCircle = styled.div`
     right: 0;
     margin: 0px 30px 30px 0px;
     cursor:pointer;
-    
+    box-shadow: 2px 2px 8px 2px #B5BD1C;
+
 
 & .horiz {
     width: 60px;
@@ -102,16 +110,25 @@ margin: 20px;
 background: white;
 box-shadow: 4px 4px 10px 2px #B5BD1C;
 
-& > :hover {
+& :hover {
     
 }
 
-& > h3 {
+h3 {
     font-size: 30px;
     color: #44470B;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-& > p {
+span {
+    color: #44470B;
+    font-size: 27px;
+    margin-right: 5px;
+}
+
+p {
     font-family: 'Pretendard-Regular';
 }
 

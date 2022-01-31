@@ -12,7 +12,7 @@ body {
     /* text-shadow: -2px 0 #fff, 0 2px #fff, 2px 0 #fff, 0 -2px #fff */
 }
 
-
+/* 메인 카드 */
 .cardbox {
     display: flex;
     flex-wrap: wrap;
@@ -21,8 +21,19 @@ body {
     margin: auto;
 }
 
-
+/* 신규단어 박스 */
 .input-box {
     display: flex;
     flex-direction: column;
+    margin: 50px 0px;
 }
+
+.textarea {
+    height:30px;
+    border:none;
+    border-bottom: 2px solid #2e7d32;
+    background: none;
+    font-size: 18px;
+    font-family: Pretendard-Regular;
+}
+

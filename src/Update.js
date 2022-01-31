@@ -3,7 +3,7 @@ import styled from "styled-components";
 // import {useHistory } from "react-router-dom"
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createCard, createCardFB } from "./redux/modules/dictionary";
+import { createCard, createCardFB, updateCard } from "./redux/modules/dictionary";
 
 import Button from '@mui/material/Button';
 
@@ -22,7 +22,6 @@ const Update = (props) => {
   const example = React.useRef(null);
 
   const toUpdate = useSelector((state)=> state.dictionary.list.filter(e=>e.id == word_id.word_id));
-  console.log(toUpdate[0]);
 
   const updateWord = () => {
         console.log('업데이트')
@@ -38,7 +37,7 @@ const Update = (props) => {
             <label htmlFor="words" style={{ textAlign: "left" }}>
               단어
             </label>
-            <textarea id="words" className="textarea" value={toUpdate[0].word} ref={word} placeholder="수정할 단어를 입력해주세요" required>
+            <textarea id="words" className="textarea" defaultValue={toUpdate[0].word} ref={word} placeholder="수정할 단어를 입력해주세요" required>
             </textarea>
           </div>
 
@@ -46,7 +45,7 @@ const Update = (props) => {
             <label htmlFor="descriptions" style={{ textAlign: "left" }}>
               뜻
             </label>
-            <textarea id="descriptions" className="textarea" value={toUpdate[0].description}
+            <textarea id="descriptions" className="textarea" defaultValue={toUpdate[0].description}
             style={{
                 height:"70px"
               }}
@@ -57,7 +56,7 @@ const Update = (props) => {
             <label htmlFor="examples" style={{ textAlign: "left" }}>
               예문
             </label>
-            <textarea id="examples" className="textarea" value={toUpdate[0].example}
+            <textarea id="examples" className="textarea" defaultValue={toUpdate[0].example}
             style={{
                 height:"70px"
               }}
@@ -65,7 +64,13 @@ const Update = (props) => {
           </div>
         </form>
 
-        <Button variant="contained" color="success" onClick={updateWord}>수정하기</Button>
+        <Button variant="contained" color="success"
+        onClick={()=>{
+            dispatch(updateCard(word.current.value, description.current.value, example.current.value));
+
+            history.goBack();
+            // dispatch(updateCard())
+        }}>수정하기</Button>
       </InputContainer>
 
       {/* 백 버튼 클릭 시 메인 페이지로 이동 */}

@@ -15,6 +15,7 @@ import {db} from "../../firebase";
 const LOAD = "dictionary/LOAD";
 const CREATE = "dictionary/CREATE";
 const DELETE = "dictionary/DELETE";
+const UPDATE = "dictionary/UPDATE";
 
 // 초기 상태값을 만들어줍니다.
 const initialState = {
@@ -34,6 +35,10 @@ export function createCard(card) {
 
 export function deleteCard(card_index){
   return {type: DELETE, card_index};
+}
+
+export function updateCard(word, description, example){
+  return {type: UPDATE, word, description, example};
 }
 
 // 미들웨어
@@ -86,6 +91,11 @@ export const deleteCardFB = (card_id) => {
 }
 
 
+
+
+// export const updateCard
+
+
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
@@ -109,9 +119,14 @@ export default function reducer(state = initialState, action = {}) {
       const new_word_list = state.list.filter((e,i) => {
         return parseInt(action.card_index) !== i;
       });
-
+      
       return {list: new_word_list};
 
+    }
+
+    case "dictionary/UPDATE": {
+      const new_word_list = [...state.list, action.word, action.description, action.example];
+      return { list: new_word_list };
     }
 
 

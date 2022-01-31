@@ -10,7 +10,7 @@ import './App.css';
 import Home from './Home';
 import New from './New';
 import Update from './Update';
-
+import NotFound from './NotFound';
 
 
 
@@ -19,9 +19,13 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="title">👩‍💻 기억삭제방지 단어장 🧠</h1>
+      <header>
+        <div className="title-container">
+        <h1 className="title">👩‍💻 기억삭제방지 단어장 🧠</h1>
+        </div>
+      </header>
       {/* <Line /> */}
-
+      <Switch>
       <Route path="/" exact>
         <Home />
       </Route>
@@ -31,6 +35,7 @@ function App() {
       <Route path="/update/:word_id">
         <Update />
       </Route>
+      </Switch>
 
     </div>
   );

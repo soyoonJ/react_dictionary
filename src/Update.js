@@ -6,12 +6,12 @@ import { updateCardFB } from "./redux/modules/dictionary";
 
 import Button from '@mui/material/Button';
 
-// import styled from "styled-components";
 import './Style.css';
 
 
 const Update = (props) => {
 
+  // link to에서 받은 값 사용하려면 useLocation 필요!
   const location = useLocation();
   // const word_id = useParams();
   const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const Update = (props) => {
     window.location.replace('/');
   };
 
+  // Link to에서 받아온 값 key 별로 나누어서 input default-value에 넣어주기
   const stateId = location.state.id;
   const stateWord = location.state.word;
   const stateDescription = location.state.description;

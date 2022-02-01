@@ -26,6 +26,7 @@ const Home = (props) => {
                         <span>
                             <Link
                             to = {{
+                                // 값 지정해서 update에 넘겨주기 (리덕스 특성 상 새로고침 시 오류 방지하기 위함)
                                 pathname: '/update/' + my_words[i].id,
                                 state: { id: my_words[i].id,
                                 word: my_words[i].word,
@@ -42,7 +43,8 @@ const Home = (props) => {
 
                             {/* 클릭하면 삭제 -> 삭제하려는 아이디값 보내줌 */}
                             <FaRegTrashAlt onClick={()=>{
-                                // 조건 여러개일 경우에 && or || 로 묶어주고 괄호!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                // 정말로 삭제하시겠습니까? 확인 - 삭제, 취소 - 삭제취소됨
+                                // 조건 여러개일 경우에 구현하려는 내용에 따라 && or || 로 묶어주고 괄호!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                 window.confirm("정말 삭제합니까?")?(dispatch(deleteCardFB(my_words[i].id)) && alert('삭제되었습니다')):alert('취소되었습니다')
                                 
                                 

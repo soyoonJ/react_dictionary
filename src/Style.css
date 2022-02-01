@@ -51,6 +51,10 @@ body {
     box-shadow: 4px 4px 10px 2px #B5BD1C;
 }
 
+a {
+    color: #44470b;
+}
+
 
 h3 {
     font-size: 30px;

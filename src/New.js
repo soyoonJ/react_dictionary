@@ -35,6 +35,7 @@ const New = (props) => {
     // dispatch(createCard({word:word.current.value, description:description.current.value, example:example.current.value}));
     dispatch(createCardFB({word:word.current.value, description:description.current.value, example:example.current.value})) 
     // 작업이 끝나면 메인으로 화면 돌려주기
+    alert('저장완료!')
     history.push('/');
     // window.location.replace("/")
     }

@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import React from "react";
 
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 // import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteCard, deleteCardFB } from "./redux/modules/dictionary";
@@ -24,10 +24,22 @@ const Home = (props) => {
                   <div className="container" key={i}>
                     <h3>{el.word}
                         <span>
-                            {/* 클릭하면 수정 창으로 이동 -> 주소창 끝에 id값 달아주기 */}
-                            <FaPencilAlt style={{margin:"0px 10px"}} onClick={()=>{
-                                history.push('/update/' + my_words[i].id);
-                            }}/>
+                            <Link
+                            to = {{
+                                pathname: '/update/' + my_words[i].id,
+                                state: { id: my_words[i].id,
+                                word: my_words[i].word,
+                                description: my_words[i].description,
+                                example: my_words[i].example
+                                }
+                            }}>
+                                {/* 클릭하면 수정 창으로 이동 -> 주소창 끝에 id값 달아주기 */}
+                                <FaPencilAlt style={{margin:"0px 10px"}} />
+                                {/* onClick={()=>{
+                                    history.push('/update/' + my_words[i].id);
+                                }} */}
+                            </Link>
+
                             {/* 클릭하면 삭제 -> 삭제하려는 아이디값 보내줌 */}
                             <FaRegTrashAlt onClick={()=>{
                                 dispatch(deleteCardFB(my_words[i].id));

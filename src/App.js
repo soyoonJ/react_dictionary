@@ -1,9 +1,6 @@
 // commit test
 import React from "react";
-import styled from "styled-components";
 import { Route, Switch } from "react-router-dom"
-import {db} from "./firebase"
-import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { loadCardsFB } from "./redux/modules/dictionary";
 
@@ -23,7 +20,7 @@ function App() {
   React.useEffect( () => {
     dispatch(loadCardsFB());
     // 뒤에 [] 안 쓰면 무한루프 빠짐!! 주의!!!!!!!!
-}, []);
+}, [dispatch]);
 
 
   return (

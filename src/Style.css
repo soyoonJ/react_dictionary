@@ -75,6 +75,7 @@ span {
 
 p {
     font-family: 'Pretendard-Regular';
+    white-space: break-spaces;
 }
 
 

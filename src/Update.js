@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-// import {useHistory } from "react-router-dom"
 import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { createCard, createCardFB, updateCard, updateCardFB } from "./redux/modules/dictionary";
+import { useDispatch } from "react-redux";
+import { updateCardFB } from "./redux/modules/dictionary";
 
 import Button from '@mui/material/Button';
 

@@ -4,7 +4,7 @@ import React from "react";
 import { useHistory, Link } from "react-router-dom";
 // import { collection, getDoc, getDocs, addDoc, doc, updateDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteCard, deleteCardFB } from "./redux/modules/dictionary";
+import { deleteCardFB } from "./redux/modules/dictionary";
 // import thunk from "redux-thunk";
 import { FaPencilAlt } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -42,7 +42,9 @@ const Home = (props) => {
 
                             {/* 클릭하면 삭제 -> 삭제하려는 아이디값 보내줌 */}
                             <FaRegTrashAlt onClick={()=>{
-                                dispatch(deleteCardFB(my_words[i].id));
+                                // 조건 여러개일 경우에 && or || 로 묶어주고 괄호!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                window.confirm("정말 삭제합니까?")?(dispatch(deleteCardFB(my_words[i].id)) && alert('삭제되었습니다')):alert('취소되었습니다')
+                                
                                 
                             }}/></span>
                     </h3>
@@ -52,7 +54,7 @@ const Home = (props) => {
                     
                     <p>{el.description}</p>
                     {/* 과제 필수 포함사항: 예문은 blue로!! */}
-                    <p style={{ color: "blue" }}>{el.example}</p>
+                    <p style={{ color: "blue"}}>{el.example}</p>
                   </div>
                 );
                 

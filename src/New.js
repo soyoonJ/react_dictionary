@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createCard, createCardFB } from "./redux/modules/dictionary";
+import { createCardFB } from "./redux/modules/dictionary";
 
 import Button from '@mui/material/Button';
 
@@ -26,9 +26,9 @@ const New = (props) => {
   const example = React.useRef(null);
 
   const addNewWord = () => {
-    if(word.current.value==''||
-    description.current.value==''||
-    example.current.value=='') {
+    if(word.current.value===''||
+    description.current.value===''||
+    example.current.value==='') {
         alert('값을 모두 입력해주세요')
     } else {
       // input에 작성한 value값을 불러서 createCardFB에 업데이트

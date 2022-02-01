@@ -90,16 +90,18 @@ export const deleteCardFB = (card_id) => {
       window.alert("아이디가 없네요!");
       return;
     }
+    // 어떤 데이터 삭제할건지 id 기준으로 컬렉션에서 선택하기
     const docRef = doc(db, "dictionary", card_id);
+    // 선택한 id 기준으로 doc에서 데이터 삭제하기
     await deleteDoc(docRef);
 
     const _card_list = getState().dictionary.list;
 		// findIndex로 몇 번째에 있는 지 찾기!
     const card_index = _card_list.findIndex((b) => {
-			// updateBucketFB의 파라미터로 넘겨받은 아이디와 
-			// 아이디가 독같은 요소는 몇 번째에 있는 지 찾아봐요!
+      // getState 해서 index 값들 중에 받아 온 index 값이랑 같은 index 뽑아내기
       return b.id === card_id;
     });
+    // 리덕스에도 삭제 필요하기 때문에 값 같이 보내줘야 함
     dispatch(deleteCard(card_index));
   }
 

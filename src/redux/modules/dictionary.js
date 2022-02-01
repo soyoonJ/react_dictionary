@@ -43,9 +43,16 @@ export function updateCard(id, words, descriptions, examples){
 }
 
 // 미들웨어
+//  - load: getDocs -> list 업데이트
+//  - create: addDoc -> getDoc -> list 업데이트
+//  - update:
+//  - delete: 
 export const loadCardsFB = () => {
+  // redux-thunk는 함수를 리턴한다.
   return async function (dispatch) {
     // dictionary라는 db 컬렉션의 데이터 불러오기
+    // getDocs를 통해 한 컬렉션에 있는 데이터 다 불러올 수 있음
+    // async, await 안 쓰면 promise로만 나옴! 비동기이기 때문에 await 꼭 써줘야 함
     const dictionary_data = await getDocs(collection(db, "dictionary"));
     
     let dictionary_list  = [];
@@ -54,6 +61,7 @@ export const loadCardsFB = () => {
 
       // console.log(b.id, b.data());
       // 전체 리스트 요소 각각에 id번호 및 속해있는 데이터를 키:밸류 값으로 빈 배열에 넣어주기
+      // b.data 쓰는 이유 : 그냥 b를 출력하면 가공하기 어려운 상태로 나옴. 때문에 .data 써야 객체 타입으로 깔끔하게 출력됨
       dictionary_list.push({ id: b.id, ...b.data() });
     });
 
@@ -65,7 +73,10 @@ export const loadCardsFB = () => {
 
 export const createCardFB = (card) => {
   return async function (dispatch) {
+    // addDoc(collection(정보), 추가하려는 내용);
     const docRef = await addDoc(collection(db, "dictionary"), card);
+    // docRef에서 정보 가져오기 위해 getDoc 씀
+    // load와 다르게 getDocs가 아닌 getDoc 쓰는 이유는, 하나를 부르기 때문
     const _dictionary = await getDoc(docRef);
     const dictionary = {id: _dictionary.id, ..._dictionary.data()};
 
@@ -94,56 +105,59 @@ export const deleteCardFB = (card_id) => {
 
 }
 
+// update에 필요한 id값과 수정할 데이터들을 받아온다
 export const updateCardFB = (id, newData) => {
-  return async function () {
+  return async function (dispatch) {
+    // doc(콜렉션 정보, 어떤 걸 수정해줄 지 값 가져오기)
     const docRef = doc(db, "dictionary", id);
-    const updateData = {id, ...newData}
-
-    await updateDoc(docRef, {...updateData})
+    // 어떤 걸 어떻게 수정해줄지! -> id랑 같이 묶인 데이터를 ...newData로 수정
+    // ...newData 부분에는 수정할 내용만 들어가도 무관! ex) {completed:false}
+    // 안에 있는 내용을 꺼내주기 위해 스프레드 문법 사용
+    await updateDoc(docRef, {...newData})
+    // 리덕스에도 값 업데이트 해주기!
+    // updateCard가 받는 파라미터(업데이트 할 값)를 동일하게 넘겨준다.
+    dispatch(updateCard(id, newData.word, newData.description, newData.example));
+    // 업데이트 완료되면 메인 페이지로 돌아가기
     window.location.replace('/');
-    // console.log(getState().dictionary);
-    // const _dictionary_list = getState().dictionary.list;
-    // const dictionary_index = _dictionary_list.findIndex((b) => {
-    //   return b.id === id;
     };
 
-    // dispatch(updateCard(dictionary_index));
   };
 
 
-
-// export const updateCard
 
 
 // Reducer
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    // do reducer stuff
-    // case "dictionary/LOAD": {
-    //   return {list:action.my_words};
-    // }
-    // 파이어베이스
+    
+    // action 함수가 가지고 있는 card를 list에 넣어줌
     case "dictionary/LOAD": {
       return {list:action.card};
     }
 
     
     case "dictionary/CREATE": {
+      // state.list에 action.card를 넣어줌 -> 넣은 새 값을 list에 넣어줌
       const new_word_list = [...state.list, action.card];
       return { list: new_word_list };
     }
 
+    // state의 list에서 action 함수가 가지고 있는 card_index랑 다른 것만 묶어서 새 배열로 만들어줌
     case "dictionary/DELETE": {
       console.log(state, action);
       const new_word_list = state.list.filter((e,i) => {
+        // 자료형 맞춰주기 위해 parseInt로 맞춰서 비교
         return parseInt(action.card_index) !== i;
       });
       
+      // 삭제할 항목만 빼고 새롭게 만든 new_word_list를 list로 반환해줌
       return {list: new_word_list};
 
     }
 
+    
     case "dictionary/UPDATE": {
+      // state.list를 가져온 데이터로 업데이트
       const new_word_list = [...state.list, action.id, action.words, action.descriptions, action.examples];
       return { list: new_word_list };
     }

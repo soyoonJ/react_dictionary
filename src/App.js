@@ -22,7 +22,9 @@ function App() {
   const dispatch = useDispatch();
   React.useEffect( () => {
     dispatch(loadCardsFB());
+    // 뒤에 [] 안 쓰면 무한루프 빠짐!! 주의!!!!!!!!
 }, []);
+
 
   return (
     <div className="App">

@@ -29,6 +29,7 @@ body {
 }
 
 .textarea {
+    /* border:none이 border-bottom보다 위에 있어야 함 */
     height:30px;
     border:none;
     border-bottom: 2px solid #2e7d32;
@@ -56,6 +57,7 @@ h3 {
     color: #44470B;
     display: flex;
     align-items: center;
+    /* 양 끝 기준으로 가로 간격 동일하게 배치 */
     justify-content: space-between;
     flex-wrap: wrap;
 
@@ -85,12 +87,14 @@ p {
     box-shadow: 2px 2px 8px 2px #B5BD1C;
 }
 
-
+/* 원 hover하면 90도 돌아가도록 설정 */
+/* transition 주기 전에는 플러스버튼 사방이 같기 때문에 transform 적용해도 눈에 안 보임 */
 .plusCircle:hover {
     transition: all ease 1s;
     transform: rotate(90deg);
 }
 
+/* 마우스를 땠을 때 반대방향으로 다시 돌도록 설정 */
 .plusCircle:not(:hover) {
     transition: all ease 1s;
     transform: rotate(-90deg);

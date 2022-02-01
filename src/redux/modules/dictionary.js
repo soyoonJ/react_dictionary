@@ -20,6 +20,7 @@ const UPDATE = "dictionary/UPDATE";
 // 초기 상태값을 만들어줍니다.
 const initialState = {
     // list:[{word:"단어입니다", description:"설명입니다설명입니다줄글줄글", example:"예시입니다예시입니다"}]
+    // 테스트 위해 list 초기값 있었으나, 테스트 완료했고 값 다 불러왔기 때문에 빈 배열로 남겨둠
     list:[]
 
 };
@@ -44,6 +45,7 @@ export function updateCard(id, words, descriptions, examples){
 // 미들웨어
 export const loadCardsFB = () => {
   return async function (dispatch) {
+    // dictionary라는 db 컬렉션의 데이터 불러오기
     const dictionary_data = await getDocs(collection(db, "dictionary"));
     
     let dictionary_list  = [];
@@ -51,10 +53,12 @@ export const loadCardsFB = () => {
     dictionary_data.forEach((b) => {
 
       // console.log(b.id, b.data());
+      // 전체 리스트 요소 각각에 id번호 및 속해있는 데이터를 키:밸류 값으로 빈 배열에 넣어주기
       dictionary_list.push({ id: b.id, ...b.data() });
     });
 
     // console.log(dictionary_list);
+    // loadCards에 dictionary_list 붙여주기
     dispatch(loadCards(dictionary_list));
   }
 }

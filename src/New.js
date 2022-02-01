@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-// import {useHistory } from "react-router-dom"
+
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createCard, createCardFB } from "./redux/modules/dictionary";
@@ -16,28 +16,36 @@ const New = (props) => {
   // const [list, setList] = React.useState([
   //   {word:"단어입니다", description:"설명입니다설명입니다줄글줄글", example:"예시입니다예시입니다"},
   // ]);
-//   const history = useHistory();
+
+  // useHistory, useDispatch 사용하기 위한 작업
   const history = useHistory();
   const dispatch = useDispatch();
-
+  // 값 불러서 보내주기 위해 ref 지정
   const word = React.useRef(null);
   const description = React.useRef(null);
   const example = React.useRef(null);
 
   const addNewWord = () => {
-
+    if(word.current.value==''||
+    description.current.value==''||
+    example.current.value=='') {
+        alert('값을 모두 입력해주세요')
+    } else {
+      // input에 작성한 value값을 불러서 createCardFB에 업데이트
     // dispatch(createCard({word:word.current.value, description:description.current.value, example:example.current.value}));
-    console.log(description.current.value);
     dispatch(createCardFB({word:word.current.value, description:description.current.value, example:example.current.value})) 
+    // 작업이 끝나면 메인으로 화면 돌려주기
     history.push('/');
     // window.location.replace("/")
-  
+    }
   };
 
+  // input 폼 작성
+  // placeholder에도 ::placeholder를 통해 스타일을 변경할 수 있음
   return (
     <div>
       <InputContainer>
-        {/* <h3>단어 추가하기</h3> */}
+
         <form>
           <div className="input-box">
             <label htmlFor="words" style={{ textAlign: "left" }}>
@@ -69,6 +77,7 @@ const New = (props) => {
           </div>
         </form>
 
+        {/* 머테리얼UI 버튼 사용 */}
         <Button variant="contained" color="success" onClick={addNewWord}>추가하기</Button>
       </InputContainer>
 

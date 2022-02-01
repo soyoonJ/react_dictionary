@@ -21,10 +21,14 @@ const Update = (props) => {
   const description = React.useRef(null);
   const example = React.useRef(null);
 
+  // 주소값의 id와 같은 id를 가진 state 가져오기
+  // 하나를 가져오기 때문에 인덱스는 0으로 동일하므로, 아래에서 활용
   const toUpdate = useSelector((state)=> state.dictionary.list.filter(e=>e.id == word_id.word_id));
 
   const updateWord = () => {
+    // 업데이트 값 전체 넘겨주기
     dispatch(updateCardFB(word_id.word_id, {word:word.current.value, description:description.current.value, example:example.current.value}));
+    alert('수정완료!')
     window.location.replace('/');
   };
 
@@ -32,12 +36,14 @@ const Update = (props) => {
   return (
     <div>
       <InputContainer>
-        {/* <h3>단어 추가하기</h3> */}
         <form>
           <div className="input-box">
             <label htmlFor="words" style={{ textAlign: "left" }}>
               단어
             </label>
+            {/* 작성했던 내용을 기본으로 깔아주고, 수정할 부분만 반영하기 위해 defaultValue 작성
+            defaultValue는 위에서 filter로 걸러냈던 toUpdate의 0번째 인덱스 기준으로 불러옴
+            -> word/description/example 다 동일한 형태!! */}
             <textarea id="words" className="textarea" defaultValue={toUpdate[0].word} ref={word} placeholder="수정할 단어를 입력해주세요" required>
             </textarea>
           </div>
@@ -46,6 +52,8 @@ const Update = (props) => {
             <label htmlFor="descriptions" style={{ textAlign: "left" }}>
               뜻
             </label>
+            {/* 뜻이랑 예문은 길게 작성하는 경우가 많기 때문에 height를 넓게 잡아줌
+            placeholder도 '추가할'에서 '수정할'로 바꿔줌 */}
             <textarea id="descriptions" className="textarea" defaultValue={toUpdate[0].description}
             style={{
                 height:"70px"
@@ -66,23 +74,12 @@ const Update = (props) => {
         </form>
         
             
-
+        {/* 수정하기 버튼 클릭 시 updateWord 함수 실행하도록!! */}
         <Button variant="contained" color="success"
         onClick={updateWord}
-            // dispatch(updateCard(word.current.value, description.current.value, example.current.value));
-            // dispatch(updateCardFB(word_id.word_id, word.current.value, description.current.value, example.current.value));
-
-            // history.goBack();
-            // dispatch(updateCard())
         >수정하기</Button>
       </InputContainer>
 
-      {/* 백 버튼 클릭 시 메인 페이지로 이동 */}
-      {/* <div
-        onClick={() => {
-          history.push("/");
-        }}
-      /> */}
     </div>
   );
 };

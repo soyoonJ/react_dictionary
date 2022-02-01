@@ -19,13 +19,33 @@
     게시글 목록을 파이어스토어에 저장하기
 ### S3 배포
 
+<br>
 
 ## :orange_book: 구현페이지
-  * 메인페이지 / 추가페이지 
+
+### 1. 메인페이지 / 추가페이지 
 
 https://user-images.githubusercontent.com/96245651/152043725-ce0e0143-5850-486f-83a0-aa45d85ba3e6.mp4
 
-
-  * NotFound 페이지
+   
+### 2. NotFound 페이지
 
 https://user-images.githubusercontent.com/96245651/152043889-fb7be61b-e366-4f1b-bcdc-60ac9e6e9630.mp4
+
+
+<br>
+
+## :ledger: 추가기능 구현
+  * 카드 overflow 스크롤 설정
+  * 단어 추가 시 textarea 줄바꿈 반영
+  * 신규카드 등록 시 미입력 값 있을 경우 작성 요청 팝업창
+  * 카드 수정기능 + 수정페이지 default-value 노출 + 수정완료 팝업
+  * 카드 삭제기능 + 정말로 삭제하시겠습니까? 확인창
+  * NotFound 페이지 추가
+
+## :green_book: 에러 해결
+  * 게시물 수정 페이지 새로고침 시 에러문제 해결 - useParams > Link 
+  * 아이콘 정렬문제 - flexbox
+  * 정말로 삭제하시겠습니까? confirm - 삼항연산자 &&로 조건문 두개 생성
+  * '+'버튼 rotate 적용 - 플러스버튼의 특성 상 transition 적용 이전에는 가시화되지 않음
+  * textarea value 적용 시 값 수정 불가. defaultValue 활용 필요

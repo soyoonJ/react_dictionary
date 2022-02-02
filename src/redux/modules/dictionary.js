@@ -38,8 +38,8 @@ export function deleteCard(card_index){
   return {type: DELETE, card_index};
 }
 
-export function updateCard(id, words, descriptions, examples){
-  return {type: UPDATE, id, words, descriptions, examples};
+export function updateCard(word_index, newdata){
+  return {type: UPDATE, word_index, newdata};
 }
 
 // 미들웨어
@@ -109,18 +109,29 @@ export const deleteCardFB = (card_id) => {
 
 // update에 필요한 id값과 수정할 데이터들을 받아온다
 export const updateCardFB = (id, newData) => {
-  return async function (dispatch) {
+  return async function (dispatch, getState) {
     // doc(콜렉션 정보, 어떤 걸 수정해줄 지 값 가져오기)
     const docRef = doc(db, "dictionary", id);
+    console.log(id)
     // 어떤 걸 어떻게 수정해줄지! -> id랑 같이 묶인 데이터를 ...newData로 수정
     // ...newData 부분에는 수정할 내용만 들어가도 무관! ex) {completed:false}
     // 안에 있는 내용을 꺼내주기 위해 스프레드 문법 사용
+    console.log(newData)
     await updateDoc(docRef, {...newData})
+
+    const _dictionary_list = getState().dictionary.list;
+    const dictionary_index = _dictionary_list.findIndex((b) => {
+			// updateBucketFB의 파라미터로 넘겨받은 아이디와 
+			// 아이디가 독같은 요소는 몇 번째에 있는 지 찾아봐요!
+      return b.id === id;
+    })
+
+    const newdata = {...newData, id:id}
     // 리덕스에도 값 업데이트 해주기!
     // updateCard가 받는 파라미터(업데이트 할 값)를 동일하게 넘겨준다.
-    dispatch(updateCard(id, newData.word, newData.description, newData.example));
+    dispatch(updateCard(dictionary_index, newdata));
     // 업데이트 완료되면 메인 페이지로 돌아가기
-    window.location.replace('/');
+    // window.location.replace('/');
     };
 
   };
@@ -160,7 +171,14 @@ export default function reducer(state = initialState, action = {}) {
     
     case "dictionary/UPDATE": {
       // state.list를 가져온 데이터로 업데이트
-      const new_word_list = [...state.list, action.id, action.words, action.descriptions, action.examples];
+      // const new_word_list = [...state.list, action.id, action.words, action.descriptions, action.examples];
+      const new_word_list = state.list.map((l, idx) => {
+        if (parseInt(action.word_index) === idx) {
+          return { ...l, ...action.newdata };
+        }else{
+          return l;
+        }
+      });
       return { list: new_word_list };
     }
 

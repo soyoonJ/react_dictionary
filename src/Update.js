@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateCardFB } from "./redux/modules/dictionary";
 
@@ -15,6 +15,7 @@ const Update = (props) => {
   const location = useLocation();
   // const word_id = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const word = React.useRef(null);
   const description = React.useRef(null);
@@ -26,9 +27,10 @@ const Update = (props) => {
 
   const updateWord = () => {
     // 업데이트 값 전체 넘겨주기
+    // dispatch(updateCardFB(stateId, {id:stateId, word:word.current.value, description:description.current.value, example:example.current.value}));
     dispatch(updateCardFB(stateId, {word:word.current.value, description:description.current.value, example:example.current.value}));
     alert('수정완료!');
-    window.location.replace('/');
+    history.push('/')
   };
 
   // Link to에서 받아온 값 key 별로 나누어서 input default-value에 넣어주기

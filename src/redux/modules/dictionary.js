@@ -38,8 +38,8 @@ export function deleteCard(card_index){
   return {type: DELETE, card_index};
 }
 
-export function updateCard(word_index, newdata){
-  return {type: UPDATE, word_index, newdata};
+export function updateCard(word_index, editWord){
+  return {type: UPDATE, word_index, editWord};
 }
 
 // 미들웨어
@@ -127,6 +127,7 @@ export const updateCardFB = (id, newData) => {
     })
 
     const newdata = {...newData, id:id}
+    console.log(newdata)
     // 리덕스에도 값 업데이트 해주기!
     // updateCard가 받는 파라미터(업데이트 할 값)를 동일하게 넘겨준다.
     dispatch(updateCard(dictionary_index, newdata));
@@ -174,7 +175,7 @@ export default function reducer(state = initialState, action = {}) {
       // const new_word_list = [...state.list, action.id, action.words, action.descriptions, action.examples];
       const new_word_list = state.list.map((l, idx) => {
         if (parseInt(action.word_index) === idx) {
-          return { ...l, ...action.newdata };
+          return { ...l, ...action.editWord };
         }else{
           return l;
         }
